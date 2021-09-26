@@ -1,0 +1,22 @@
+{
+  "name": "statutcri",
+  "version": "1.0.0",
+  "description": "A discord bot to inform in real time of the cri's status",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/goblivend/StatusCri.git"
+  },
+  "author": "Goblivend (Ivan)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/goblivend/StatusCri/issues"
+  },
+  "homepage": "https://github.com/goblivend/StatusCri#readme",
+  "dependencies": {
+    "discord.js": "^13.1.0"
+  }
+}
