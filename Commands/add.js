@@ -4,10 +4,15 @@ module.exports = {
     execute(message, args, Discord){
         //const Embed = Discord.MessageEmbed
 
+        
+        fetch(url).then(response => response.json().then(data => console.log(data))).catch(err => console.log(`Erreur : ${err}`));
+
 
 
     }
+}
 
 
-
+function GetUrl(group, service) {
+    return `https://devoups.online//api/v1/services/${group}_${service}/statuses`;
 }

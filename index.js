@@ -1,11 +1,16 @@
+// ######################################################
+// Discord constants
+// ######################################################
 const Discord = require('discord.js');
 
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS] });
 
-
 const { token } = require('../token.json');
 const { prefix } = require('./config.json');
 
+// ######################################################
+// Get my commands
+// ######################################################
 
 const fs = require('fs');
 
@@ -19,6 +24,9 @@ for(const file of commandFiles){
     client.command.set(command.name, command);
 }
 
+// ######################################################
+// Discord calls
+// ######################################################
 
 client.once('ready', () =>{
     console.log(`Bot ${client.user.tag} online !!\n\rby using : ${prefix}`);
