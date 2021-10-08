@@ -5,6 +5,10 @@ const Discord = require('discord.js');
 
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS ] });
 
+require('discord-buttons')(client);
+const { MessageButton, MessageActionRow } = require('discord-buttons')
+
+
 const { token } = require('../token.json');
 const { prefix } = require('./config.json');
 
@@ -32,6 +36,9 @@ client.once('ready', () =>{
     console.log(`Bot ${client.user.tag} online !!\n\rby using : ${prefix}`);
 });
 
+// ######################################################
+// Detect Commands
+// ######################################################
 
 client.on('messageCreate', message =>{    
     if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -40,7 +47,7 @@ client.on('messageCreate', message =>{
     const args = message.content.slice(prefix.length).split(" ");
     const command = args.shift().toLowerCase();
 
-    console.log(`Received the command \n\r${command}`);
+    console.log(`Received the command \n\r${command}\n\rwith the arguments\n\r${args}`);
 
     if (command === "help"){
         client.command.get('help').execute(message, args, Discord);
@@ -78,9 +85,23 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
-client.on('interactionCreate', interaction => {
-	if (!interaction.isButton()) return;
+// ######################################################
+// Buttons handling
+// ######################################################
+
+client.on('clickButton', async (button) => {
 	
+	console.log("Clicked");
+
+    switch (button.id)
+    {
+        case "Test" :
+            console.log("Test Button clicked");
+            break;
+    
+        default :
+            console.log("Not a registered button : " + interaction.id);
+    }
 });
 
 

@@ -20,13 +20,20 @@ module.exports = {
             .addField('Inline field title', 'Some value here', true)
             //.setImage('https://i.imgur.com/AfFp7pu.png');
                 
+
+            const button = new Discord.MessageButton()
+                .setID('Test')
+                .setLabel('Primary')
+                .setStyle('PRIMARY');
+
+            console.log("My button : " + button.id);
+
             const row = new Discord.MessageActionRow()
                 .addComponents(
-                    new Discord.MessageButton()
-                        .setCustomId('primary')
-                        .setLabel('Primary')
-                        .setStyle('PRIMARY'),
+                    button
                 );
+
+                console.log("My row : " + row.CustomId);
             message.channel.send({embeds : [embed], content: 'Pong!', components: [row] });
 
     }

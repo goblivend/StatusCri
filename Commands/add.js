@@ -1,3 +1,6 @@
+const fetch = require("cross-fetch");
+
+
 module.exports = {
     name: 'add',
     description: 'Add another chan in the category to check if on or not',
@@ -5,7 +8,7 @@ module.exports = {
         //const Embed = Discord.MessageEmbed
 
         
-        fetch(url).then(response => response.json().then(data => console.log(data))).catch(err => console.log(`Erreur : ${err}`));
+        fetch(GetUrl(args[0], args[1])).then(response => response.json().then(data => console.log(data))).catch(err => console.log(`Erreur : ${err}`));
 
 
 
@@ -14,5 +17,5 @@ module.exports = {
 
 
 function GetUrl(group, service) {
-    return `https://devoups.online//api/v1/services/${group}_${service}/statuses`;
+    return `https://devoups.online/api/v1/services/${group}_${service}/statuses`;
 }
