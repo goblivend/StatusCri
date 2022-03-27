@@ -1,124 +1,67 @@
-// ######################################################
-// Discord constants
-// ######################################################
+
+// >>>>>>>> Begin const discord >>>>>>>>
+
 const Discord = require('discord.js');
 
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS ] });
-
-require('discord-buttons')(client);
-const { MessageButton, MessageActionRow } = require('discord-buttons')
-
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] });
 
 const { token } = require('../token.json');
-const { prefix } = require('./config.json');
 
-// ######################################################
-// Get my commands
-// ######################################################
 
 const fs = require('fs');
+const { fileURLToPath } = require('url');
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-client.command = new Discord.Collection();
-
-const commandFiles = fs.readdirSync('./Commands/').filter(file => file.endsWith('.js'));
-console.log(`${commandFiles}`)
-for(const file of commandFiles){
-    const command = require(`./Commands/${file}`);
-
-    client.command.set(command.name, command);
-}
-
-// ######################################################
-// Discord calls
-// ######################################################
-
-client.once('ready', () =>{
-    console.log(`Bot ${client.user.tag} online !!\n\rby using : ${prefix}`);
-});
-
-// ######################################################
-// Detect Commands
-// ######################################################
-
-client.on('messageCreate', message =>{    
-    if (!message.content.startsWith(prefix) || message.author.bot) return;
+// <<<<<<<<< End const discord <<<<<<<<<
 
 
-    const args = message.content.slice(prefix.length).split(" ");
-    const command = args.shift().toLowerCase();
 
-    console.log(`Received the command \n\r${command}\n\rwith the arguments\n\r${args}`);
+// >>>>>>>> Begin Discord Calls >>>>>>>>
 
-    if (command === "help"){
-        client.command.get('help').execute(message, args, Discord);
-        message.channel.send("Please, make someone send help !")
-    } else if (command === "add"){
-        client.command.get('add').execute(message, args, Discord);
-    } else if (command === "ping"){
-        client.command.get('ping').execute(message, args, Discord);
+client.once('ready', () => {
+    console.log(`Bot ${client.user.tag} online !!\n\r`);
+
+
+    const guildId = '691031398768705697';
+    const guild = client.guilds.cache.get(guildId);
+    let commands
+
+    if (guild) {
+        console.log("Guild found");
+        commands = guild.commands;
+    } else {
+        commands = client.application?.commands;
     }
 
+    commands?.create({
+        name: 'ping',
+        description: 'Replies with pong'
+    });
+
+    console.log(`commands loaded`);
 });
 
-/*
-client.on('interactionCreate', async interaction => {
-    if (!interaction.isCommand()) return;
 
-    if (interaction.commandName === 'ping') {
-        const row = new Discord.MessageActionRow()
-            .addComponents(
-                new Discord.MessageButton()
-                    .setCustomId('primary')
-                    .setLabel('Primary')
-                    .setStyle('PRIMARY'),
-            );
+client.on('interactionCreate', async (interaction) => {
+    if (!interaction.isCommand())
+        return;
 
-        await interaction.reply({ content: 'Pong!', components: [row] });
+    const { commandName, options } = interaction;
+
+    for (const file of commandFiles) {
+        const command = require(`./commands/${file}`);
+
+        if (command.name === commandName) {
+            try {
+                await command.execute(interaction, options, Discord);
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }
-});*/
+})
 
-client.on('interactionCreate', async interaction => {
-	if (!interaction.isCommand()) return;
-
-	if (interaction.commandName === 'ping') {
-		await interaction.reply('Pong!');
-	}
-});
-
-// ######################################################
-// Buttons handling
-// ######################################################
-
-client.on('clickButton', async (button) => {
-	
-	console.log("Clicked");
-
-    switch (button.id)
-    {
-        case "Test" :
-            console.log("Test Button clicked");
-            break;
-    
-        default :
-            console.log("Not a registered button : " + interaction.id);
-    }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// <<<<<<<<< End Discord Calls <<<<<<<<<
 
 client.login(token);
 
