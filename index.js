@@ -1,20 +1,20 @@
 
 // >>>>>>>> Begin const discord >>>>>>>>
+const fetch = require("node-fetch");
 
 const Discord = require('discord.js');
 
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] });
 
-const { token } = require('../token.json');
 
+
+const { token } = require('../token.json');
 
 const fs = require('fs');
 const { fileURLToPath } = require('url');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
 // <<<<<<<<< End const discord <<<<<<<<<
-
-
 
 // >>>>>>>> Begin Discord Calls >>>>>>>>
 
@@ -33,10 +33,8 @@ client.once('ready', () => {
         commands = client.application?.commands;
     }
 
-    commands?.create({
-        name: 'ping',
-        description: 'Replies with pong'
-    });
+    commands?.create({ name: 'ping', description: 'Replies with pong' });
+    commands?.create({ name: 'update', description: 'Update the statuses' });
 
     console.log(`commands loaded`);
 });
@@ -53,7 +51,7 @@ client.on('interactionCreate', async (interaction) => {
 
         if (command.name === commandName) {
             try {
-                await command.execute(interaction, options, Discord);
+                await command.execute(interaction, options, Discord, fetch);
             } catch (error) {
                 console.error(error);
             }
