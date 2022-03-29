@@ -1,11 +1,11 @@
+const fetch = require("node-fetch");
+
 module.exports = {
-
-
     name: "update",
     description: "Updates the statuses",
-    execute(interaction, args, Discord, fetch) {
+    execute(interaction, args, test) {
         const DEVOUPS_URL = "https://devoups.online/api/v1/services/";
-        getStatus(fetch, DEVOUPS_URL, "assistants-services", "git-assistants").then(status => {
+        getStatus(DEVOUPS_URL, "assistants-services", "git-assistants").then(status => {
             interaction.reply({
                 content: `Git Assistants: ${status}`,
                 ephemeral: true, // Only the author will see this message
@@ -16,7 +16,7 @@ module.exports = {
     }
 }
 
-function getStatus(fetch, url, group, service) {
+function getStatus(url, group, service) {
     return fetch(`${url}/${group}_${service}/statuses`).then(res => {
         return res.json();
     }).then(data => {

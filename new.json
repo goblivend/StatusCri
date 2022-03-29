@@ -1,0 +1,629 @@
+{
+    "name": "Mail",
+    "group": "Internal services",
+    "key": "internal-services_mail",
+    "results": [
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 234113293,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (578042569) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:56:30.430178Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 240399166,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (578012303) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:57:00.696855Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 241926406,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577982035) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:57:30.965011Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 239878268,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577951762) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:58:01.237864Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 238091252,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577921423) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:58:31.576772Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 240347782,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577891059) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:59:01.940812Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 271678308,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577860623) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T05:59:32.376088Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 235327033,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577830165) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:00:02.834073Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 232936600,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577799854) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:00:33.145028Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 240596059,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577769588) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:01:03.411351Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 236686895,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577739327) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:01:33.672996Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 232686248,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577709047) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:02:03.9529Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 234167779,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577678784) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:02:34.215085Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 234942498,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577648526) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:03:04.473994Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 241671486,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577618250) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:03:34.749888Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 234029247,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577587912) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:04:05.087068Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 264377712,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577557451) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:04:35.548847Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 239199829,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577527142) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:05:05.857917Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 233327545,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577496876) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:05:36.12392Z"
+        },
+        {
+            "status": 0,
+            "hostname": "mail.cri.epita.fr",
+            "duration": 238691200,
+            "conditionResults": [
+                {
+                    "condition": "[CONNECTED] == true",
+                    "success": true
+                },
+                {
+                    "condition": "[RESPONSE_TIME] \u003c= 1000",
+                    "success": true
+                },
+                {
+                    "condition": "[CERTIFICATE_EXPIRATION] (577466529) \u003e 168h (604800000)",
+                    "success": false
+                }
+            ],
+            "success": false,
+            "timestamp": "2022-03-29T06:06:06.470821Z"
+        }
+    ],
+    "events": [
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-16T21:45:30.273099Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-16T21:46:00.491166Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T08:59:43.715004Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T09:00:14.154471Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T10:34:27.751367Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T10:35:01.317258Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T10:58:28.174127Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T10:58:59.815858Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T11:07:10.088256Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T11:13:42.810976Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T12:13:37.15346Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T12:14:07.842471Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T18:24:45.965981Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T18:25:16.22012Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T19:36:29.47257Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T19:36:59.721856Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T20:03:28.426724Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T20:03:58.674699Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T20:04:29.933178Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T20:05:00.180848Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-17T21:41:43.210037Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-17T23:41:56.765684Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-18T08:24:49.893351Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-18T08:25:20.14606Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-18T10:21:54.599162Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-18T10:22:24.845968Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-18T10:41:13.865624Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-18T10:41:44.145494Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-21T01:37:32.12434Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-21T01:38:02.459023Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-22T15:37:38.233582Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-22T15:38:08.514386Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-22T15:44:27.286938Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-22T15:45:07.230368Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-23T04:40:23.07589Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-23T04:40:53.352247Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-23T05:43:27.199886Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-23T05:43:57.448503Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-23T11:28:25.853898Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-23T11:28:56.110787Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-24T03:35:47.1414Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-24T03:36:17.38743Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-25T17:30:38.710749Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-25T17:31:08.960855Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-26T11:46:36.444968Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-26T11:47:21.892999Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-27T05:44:21.083852Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-27T05:44:51.354891Z"
+        },
+        {
+            "type": "UNHEALTHY",
+            "timestamp": "2022-03-27T12:11:06.859609Z"
+        },
+        {
+            "type": "HEALTHY",
+            "timestamp": "2022-03-27T12:11:37.103999Z"
+        }
+    ]
+}
