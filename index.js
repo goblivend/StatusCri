@@ -10,9 +10,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 
 const { token } = require('../token.json');
 
-const fs = require('fs');
-const { fileURLToPath } = require('url');
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
 let test = false;
 
 // <<<<<<<<< End const discord <<<<<<<<<
@@ -39,10 +37,6 @@ client.once('ready', () => {
     commands?.create(new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with pong')
-    );
-    commands?.create(new SlashCommandBuilder()
-        .setName('update')
-        .setDescription('Updates the statuses')
     );
     commands?.create(new SlashCommandBuilder()
         .setName('help')
@@ -279,7 +273,6 @@ client.once('ready', () => {
             .addChoice('Wiki-Prog', 'wiki-prog')
         )
     );
-
     commands?.create(new SlashCommandBuilder()
         .setName('clear')
         .setDescription('Clears the list of services in the CriStatus category')
@@ -297,21 +290,18 @@ client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand())
         return;
     const { commandName, options } = interaction;
-    let server = interaction.guild.id
-    console.log(`${server} : Command ${commandName}`);
+
+    console.log(`${interaction.guild.name} : Command ${commandName}`);
 
 
-    for (const file of commandFiles) {
-        const command = require(`./commands/${file}`);
+    const command = require(`./commands/${commandName}.js`);
 
-        if (command.name === commandName) {
-            try {
-                await command.execute(interaction, options, test);
-            } catch (error) {
-                console.error(error);
-            }
-        }
+    try {
+        await command.execute(interaction, options, test);
+    } catch (error) {
+        console.error(error);
     }
+
 })
 
 // <<<<<<<<< End Discord Calls <<<<<<<<<
