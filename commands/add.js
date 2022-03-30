@@ -29,7 +29,10 @@ module.exports = {
                         }, {
                             id: interaction.guild.roles.cache.find(r => r.id === interaction.guild.id),
                             deny: [Permissions.FLAGS.CONNECT],
-                        }
+                        }, {
+                            id: interaction.guild.roles.cache.find(r => r.name === "Status Cri"),
+                            allow: [Permissions.FLAGS.MANAGE_CHANNELS],
+                        },
                     ],
                 }).then(category => {
                     cat = category;

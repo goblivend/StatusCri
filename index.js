@@ -319,8 +319,7 @@ client.on('interactionCreate', async (interaction) => {
 client.login(token);
 
 
-// Command to send a message with non-interactible buttons (DANGER or SUCCESS) to tell the statuses of the services (either online or offline) by using params, either group or specific service
-// Array of services with their groups and array of group with their services
-// setInterval(()=> {
-//     // Update the statuses
-// }, 5 * 1000);
+
+// all in : https://discord.com/api/oauth2/authorize?client_id=957708011164532766&permissions=1644971949559&scope=bot%20applications.commands
+
+// https://discord.com/api/oauth2/authorize?client_id=957708011164532766&permissions=268437520&scope=bot%20applications.commands

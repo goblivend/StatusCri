@@ -99,15 +99,3 @@ module.exports = {
 
     }
 }
-
-async function getStatus(url, group, service) {
-    val = await fetch(`${url}/${group}_${service}/statuses`).then(res => {
-        return res.json();
-    }).then(data => {
-        return data.results[0].conditionResults[0].success;
-    }).catch(err => {
-        console.log(err);
-    });
-    return val;
-
-}
