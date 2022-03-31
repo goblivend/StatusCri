@@ -2,6 +2,7 @@
 module.exports = {
     name: "clear",
     description: "Clears the list of services in the CriStatus category",
+    image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/clear.png",
     async execute(interaction, args, test) {
         await interaction.deferReply({
             content: "Awaiting response from Discord...",

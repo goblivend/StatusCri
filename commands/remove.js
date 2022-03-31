@@ -3,7 +3,8 @@ const { DEVOUPS_GROUPS, DEVOUPS_GROUPS_CODE, DEVOUPS_SERVICES_NAME, DEVOUPS_SERV
 module.exports = {
 
     name: "remove",
-    description: "Removes service channels to update",
+    description: "Removes a service channel in the `CRISTATUS` category",
+    image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/Main%20feature.png",
     async execute(interaction, args, test) {
         await interaction.deferReply({
             ephemeral: true, // Only the author will see this message

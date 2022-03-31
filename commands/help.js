@@ -11,7 +11,7 @@ module.exports = {
 
 
         commandFiles.sort((a, b) => a.name < b.name);
-        console.log(commandFiles)
+        // console.log(commandFiles)
         for (let commandName of commandFiles) {
             command = require(`./${commandName}`);
 

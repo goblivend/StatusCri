@@ -6,7 +6,8 @@ const { DEVOUPS_GROUPS, DEVOUPS_GROUPS_CODE, DEVOUPS_SERVICES_NAME, DEVOUPS_SERV
 
 module.exports = {
     name: "statuses",
-    description: "Gets the statuses of the services",
+    description: "Gets the statuses of the specified services",
+    image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/Direct%20statuses%20assistants-services.png",
     execute(interaction, args, test) {
         interaction.deferReply({
             content: "Awaiting response from Devoups...",

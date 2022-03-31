@@ -3,8 +3,8 @@ const { Permissions } = require('discord.js');
 
 module.exports = {
     name: "add",
-    description: "Adds a service channel to update",
-    image: "https://github.com/goblivend/StatusCri/tree/main/README%20Content/Main%20feature.png",
+    description: "Adds a service channel in the `CRISTATUS` category to update\nAnd creates it if the category doesn't exist at the moment",
+    image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/Main%20feature.png",
     async execute(interaction, args, test) {
         await interaction.deferReply({
             content: "Awaiting response from Devoups...",
