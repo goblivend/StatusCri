@@ -7,9 +7,6 @@ module.exports = {
     description: "Shows this help message",
     execute(interaction, args, test) {
         let embeds = [];
-
-
-
         commandFiles.sort((a, b) => a.name < b.name);
         // console.log(commandFiles)
         for (let commandName of commandFiles) {
@@ -17,7 +14,7 @@ module.exports = {
 
             embeds.push(new MessageEmbed()
                 .setColor('#0099ff')
-                .addField('Command : ' + command.name, command.description)
+                .addField('Command : /' + command.name, command.description)
                 .setImage(command.image)
             )
         }
