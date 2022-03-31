@@ -46,6 +46,12 @@ The remove command works like the add command, but does the opposit, this one wi
 /clear
 ```
 
+<p align="center">
+    <img src="./README%20Content/clear.png?raw=true" alt="Empty the `CRISTATUS` category">
+    </br>
+    <caption>Clear Status category</caption>
+</p>
+
 This command will remove all the channels included in the category, an easier way to remove all the channels without having to add all groups and all services.
 
 ## Statuses
@@ -57,7 +63,7 @@ This command will remove all the channels included in the category, an easier wa
 This command will reply to the user the status of the specified services
 
 <p align="center">
-    <img src="./README%20Content/Direct%20statuses%20assistant-services.png?raw=true" alt="Real time updating statuses">
+    <img src="./README%20Content/Direct%20statuses%20assistant-services%20picture.png?raw=true" alt="Real time updating statuses">
     </br>
     <caption>Direct status of Assistant Services group</caption>
 </p>
