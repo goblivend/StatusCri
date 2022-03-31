@@ -70,7 +70,7 @@ module.exports = {
                         button.setEmoji('717700063429656587')
                     rows[rows.length - 1].addComponents(button);
                 } else {
-                    mycontent += `${DEVOUPS_SERVICES_NAME[DEVOUPS_SERVICES_CODE.indexOf(service)]}: ${status ? '✅' : '❌'}\n`
+                    mycontent += `${status ? '✅' : '❌'} ${DEVOUPS_SERVICES_NAME[DEVOUPS_SERVICES_CODE.indexOf(service)]}\n`
                 }
             }
             if (test) {
@@ -86,7 +86,7 @@ module.exports = {
                         .setEmoji('717700063429656587')
                     )
                 }
-                mycontent += 'test :x:\n'
+                mycontent += '❌ test\n'
                 //console.log("\n\nMy additionnal content is :" + mycontent + '\n\n');
             }
             interaction.editReply({

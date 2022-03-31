@@ -4,25 +4,28 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 
 module.exports = {
     name: "help",
-    description: "Replies with help",
+    description: "Shows this help message",
     execute(interaction, args, test) {
-        let embed = new MessageEmbed();
-        embed.setColor('#0099ff');
+        let embeds = [];
+
 
 
         commandFiles.sort((a, b) => a.name < b.name);
-
-        let command_list = [];
         console.log(commandFiles)
         for (let commandName of commandFiles) {
             command = require(`./${commandName}`);
-            command_list.push(`\`${command.name}\` - ${command.description}`);
+
+            embeds.push(new MessageEmbed()
+                .setColor('#0099ff')
+                .addField('Command : ' + command.name, command.description)
+                .setImage(command.image)
+            )
         }
-        embed.addField('Commands', command_list.join('\n'));
+
         // embed.setFooter('Use `help <command>` to get more information about a command');
 
         interaction.reply({
-            embeds: [embed],
+            embeds: embeds,
             ephemeral: true, // Only the author will see this message
         });
     }
