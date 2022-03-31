@@ -16,9 +16,9 @@ The main feature of this bot is to create a category in which it will displa cha
 
 As we can see we have different visuals.
 
-    - ❓ will be the first one you see, it will be the first you see and will only be shown after you add the service until the first update
-    - ✅ will be shown if the specified service of the cri is online
-    - ❌ will be shown if the specified service of the cri is offline
+- ❓ will be the first one you see, it will be the first you see and will only be shown after you add the service until the first update
+- ✅ will be shown if the specified service of the cri is online
+- ❌ will be shown if the specified service of the cri is offline
 
 To choose the different services simply use the ``/add`` command.
 It will sort the different services using the different groups you can see on [Devoups](https://devoups.online).
