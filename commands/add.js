@@ -1,11 +1,12 @@
-const { DEVOUPS_GROUPS, DEVOUPS_GROUPS_CODE, DEVOUPS_SERVICES_CODE_SHORTEN, DEVOUPS_SERVICES_CODE, } = require('../DEVOUPS');
-const { Permissions } = require('discord.js');
+const { DEVOUPS_GROUPS, DEVOUPS_GROUPS_CODE, DEVOUPS_SERVICES_CODE_SHORTEN, DEVOUPS_SERVICES_CODE, } = require('../DEVOUPS')
+const { Permissions } = require('discord.js')
+const { Status } = require('../Status')
 
 module.exports = {
     name: "add",
     description: "Adds a service channel in the `CRISTATUS` category to update\nAnd creates it if the category doesn't exist at the moment",
     image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/Main%20feature.png",
-    async execute(interaction, args, test) {
+    async execute(interaction, args, test, instance) {
         await interaction.deferReply({
             content: "Awaiting response from Devoups...",
             ephemeral: true, // Only the author will see this message
@@ -13,8 +14,8 @@ module.exports = {
         if (!interaction.member.roles.cache.find(role => role.name === "Modo" || role.name === "Devoups Admin")) {
             interaction.editReply({
                 content: `You need the <@&${interaction.guild.roles.cache.find(role => role.name === "Modo" || role.name === "Devoups Admin").id}> role to use this command`,
-            });
-            return;
+            })
+            return
         }
 
 
@@ -35,76 +36,78 @@ module.exports = {
                     },
                 ],
             })
-            cat = category;
+            cat = category
             interaction.editReply({
                 content: 'Category set to ' + category.name,
                 ephemeral: true, // Only the author will see this message
-            });
+            })
 
-            // return;
+            // return
         }
-        let services = [];
+        let services = []
         for (dev_group in DEVOUPS_GROUPS_CODE) {
-            let group = DEVOUPS_GROUPS_CODE[dev_group];
-            let val = args.getString(group);
+            let group = DEVOUPS_GROUPS_CODE[dev_group]
+            let val = args.getString(group)
             if (val == null)
-                continue;
+                continue
 
             if (val === 'all') {
                 // console.log(group)
                 for (service in DEVOUPS_GROUPS[group]) {
                     // console.log('\t' + DEVOUPS_GROUPS[group][service])
-                    services.push(DEVOUPS_GROUPS[group][service]);
+                    services.push(DEVOUPS_GROUPS[group][service])
                 }
             } else {
                 // console.log(group + '_' + val)
-                services.push(val);
+                services.push(val)
             }
         }
-        // console.log(services);
+        // console.log(services)
         await interaction.editReply({
             content: "Adding services...",
         })
-        let promises = [];
+        let promises = []
         let children = Array.from(cat.guild.channels.cache.filter(c => c.parentId === cat.id).values())
-        let usedServices = children.map(chan => chan.name.split("_")[1]);
-        content = "Adding those serivces: " + services.join(", ") + "\n";
+        let usedServices = children.map(chan => chan.name.split("_")[1])
+        content = "Adding those serivces: " + services.join(", ") + "\n"
         for (let service of services) {
             let shortenService = DEVOUPS_SERVICES_CODE_SHORTEN[DEVOUPS_SERVICES_CODE.indexOf(service)]
             if (usedServices.includes(shortenService)) {
                 let chan = children.find(chan => chan.name.split("_")[1] === shortenService)
-                console.log(`Channel #${service} already exists`);
+                console.log(`Channel #${service} already exists`)
                 if ((content + `<#${chan.id}> already exists\n`).length < 2000)
-                    content += `<#${chan.id}> already exists\n`;
+                    content += `<#${chan.id}> already exists\n`
             } else {
-                console.log(`Creating channel : ${service}`);
-                promises.push(interaction.guild.channels.create("❓_" + DEVOUPS_SERVICES_CODE_SHORTEN[DEVOUPS_SERVICES_CODE.indexOf(service)], {
-                    type: "GUILD_VOICE",
-                    permissionOverwrites: [
-                        {
-                            id: interaction.guild.roles.cache.find(r => r.id === interaction.guild.id),
-                            deny: [Permissions.FLAGS.CONNECT],
-                        }, {
-                            id: interaction.guild.roles.cache.find(r => r.id === interaction.guild.id),
-                            allow: [Permissions.FLAGS.CONNECT],
-                        },
-                    ],
-                }).then(channel => {
+                console.log(`Creating channel : ${service}`)
+                promises.push(new Promise(async () => {
+                    let channel = await interaction.guild.channels.create("❓_" + DEVOUPS_SERVICES_CODE_SHORTEN[DEVOUPS_SERVICES_CODE.indexOf(service)], {
+                        type: "GUILD_VOICE",
+                        permissionOverwrites: [
+                            {
+                                id: interaction.guild.roles.cache.find(r => r.id === interaction.guild.id),
+                                deny: [Permissions.FLAGS.CONNECT],
+                            }, {
+                                id: interaction.guild.roles.cache.find(r => r.id === interaction.guild.id),
+                                allow: [Permissions.FLAGS.CONNECT],
+                            }
+                        ]
+                    })
                     channel.setParent(cat)
+                    await instance.addService(service, channel.id, channel.guild.id)
+                    channel.setName(instance.getChannelName(service, (await new Status(service, instance.getGroupFromService(service)).get())[0]))
                     if ((content + `Creating channel : <#${channel.id}>\n`).length < 2000)
                         content += `Creating channel : <#${channel.id}>\n`
                 }))
-
-
             }
         }
 
-        Promise.all(promises).then(() => {
+        await Promise.all(promises).then(() => {
             interaction.editReply({
                 content: content,
                 ephemeral: true, // Only the author will see this message
-            });
+            })
         })
         console.log('\n')
+
     }
 }

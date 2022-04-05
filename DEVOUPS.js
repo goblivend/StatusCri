@@ -60,7 +60,7 @@ const DEVOUPS_GROUPS_CODE = [
     "others",
     "pie-sm",
     "student-services"
-];
+]
 const DEVOUPS_SERVICES_CODE = [
     "git-assistants",
     "intranet-assistants",
@@ -99,7 +99,7 @@ const DEVOUPS_SERVICES_CODE = [
     "news",
     "rocket-chat",
     "wiki-prog"
-];
+]
 const DEVOUPS_SERVICES_NAME = [
     "Git Assistants",
     "Intranet Assistants",
@@ -177,5 +177,5 @@ const DEVOUPS_SERVICES_CODE_SHORTEN = [
     "news",
     "rocket-chat",
     "wiki-prog"
-];
+]
 module.exports = { DEVOUPS_GROUPS, DEVOUPS_GROUPS_CODE, DEVOUPS_SERVICES_CODE, DEVOUPS_SERVICES_CODE_SHORTEN, DEVOUPS_SERVICES_NAME, DEVOUPS_URL }

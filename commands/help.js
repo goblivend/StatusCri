@@ -1,16 +1,16 @@
-const { Discord, MessageEmbed } = require("discord.js");
-const fs = require('fs');
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+const { Discord, MessageEmbed } = require("discord.js")
+const fs = require('fs')
+const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'))
 
 module.exports = {
     name: "help",
     description: "Shows this help message",
-    execute(interaction, args, test) {
-        let embeds = [];
-        commandFiles.sort((a, b) => a.name < b.name);
+    execute(interaction, args, test, instance) {
+        let embeds = []
+        commandFiles.sort((a, b) => a.name < b.name)
         // console.log(commandFiles)
         for (let commandName of commandFiles) {
-            command = require(`./${commandName}`);
+            command = require(`./${commandName}`)
 
             embeds.push(new MessageEmbed()
                 .setColor('#0099ff')
@@ -19,11 +19,11 @@ module.exports = {
             )
         }
 
-        // embed.setFooter('Use `help <command>` to get more information about a command');
+        // embed.setFooter('Use `help <command>` to get more information about a command')
 
         interaction.reply({
             embeds: embeds,
             ephemeral: true, // Only the author will see this message
-        });
+        })
     }
 }

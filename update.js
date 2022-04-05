@@ -1,6 +1,6 @@
 const { DEVOUPS_SERVICES_CODE, DEVOUPS_GROUPS, DEVOUPS_SERVICES_CODE_SHORTEN, DEVOUPS_URL } = require("./DEVOUPS");
 const fetch = require("node-fetch");
-const Status = require("./Status");
+const { Status } = require("./Status");
 
 module.exports = {
     name: "update",

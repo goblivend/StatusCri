@@ -1,47 +1,48 @@
 
 // >>>>>>>> Begin const discord >>>>>>>>
 
-const Discord = require('discord.js');
+const Discord = require('discord.js')
 
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] });
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
-
-const { token } = require('../token.json');
+const { SlashCommandBuilder } = require('@discordjs/builders')
 
 
-let test = false;
+const { token } = require('../token.json')
+const { Instance } = require('./Instance')
+
+let test = true
+let instance
 
 // <<<<<<<<< End const discord <<<<<<<<<
 
 // >>>>>>>> Begin Discord Calls >>>>>>>>
 
-client.once('ready', () => {
-    console.log(`Bot ${client.user.tag} online !!\n\r`);
+client.once('ready', async () => {
+    console.log(`Bot ${client.user.tag} online !!\n\r`)
 
 
-    const guildId = '691031398768705697';
-    const guild = client.guilds.cache.get(guildId);
+    const guildId = '691031398768705697'
+    const guild = client.guilds.cache.get(guildId)
     let commands
 
     if (guild) {
-        console.log("Guild found");
-        commands = guild.commands;
+        console.log("Guild found")
+        commands = guild.commands
         test = true
     } else {
-        commands = client.application?.commands;
+        commands = client.application?.commands
     }
 
-    // commands?.create({ name: 'ping', description: 'Replies with pong' });
+    // commands?.create({ name: 'ping', description: 'Replies with pong' })
     commands?.create(new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with pong')
-    );
+    )
     commands?.create(new SlashCommandBuilder()
         .setName('help')
         .setDescription('Shows the help')
-    );
+    )
     commands?.create(new SlashCommandBuilder()
         .setName('statuses')
         .setDescription('Gets the statuses of the services')
@@ -118,7 +119,7 @@ client.once('ready', () => {
             .addChoice('Rocket.Chat', 'rocket-chat')
             .addChoice('Wiki-Prog', 'wiki-prog')
         )
-    );
+    )
     commands?.create(new SlashCommandBuilder()
         .setName('add')
         .setDescription('Adds services')
@@ -195,7 +196,7 @@ client.once('ready', () => {
             .addChoice('Rocket.Chat', 'rocket-chat')
             .addChoice('Wiki-Prog', 'wiki-prog')
         )
-    );
+    )
     commands?.create(new SlashCommandBuilder()
         .setName('remove')
         .setDescription('removes services')
@@ -272,41 +273,44 @@ client.once('ready', () => {
             .addChoice('Rocket.Chat', 'rocket-chat')
             .addChoice('Wiki-Prog', 'wiki-prog')
         )
-    );
+    )
     commands?.create(new SlashCommandBuilder()
         .setName('clear')
         .setDescription('Clears the list of services in the CriStatus category')
-    );
+    )
 
-    console.log(`commands loaded`);
+    console.log(`commands loaded\n`)
 
-    client.guilds.cache.each(guild => {
-        require('./update').execute(guild);
-    });
-});
+    // client.guilds.cache.each(guild => {
+    //     require('./update').execute(guild)
+    // })
+    instance = new Instance(client)
+    await instance.updateStatuses()
+
+})
 
 
 client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand())
-        return;
-    const { commandName, options } = interaction;
+        return
+    const { commandName, options } = interaction
 
-    console.log(`${interaction.guild.name} : Command ${commandName}`);
+    console.log(`${interaction.guild.name} : Command ${commandName}`)
 
 
-    const command = require(`./commands/${commandName}.js`);
+    const command = require(`./commands/${commandName}.js`)
 
     try {
-        await command.execute(interaction, options, test);
+        await command.execute(interaction, options, test, instance)
     } catch (error) {
-        console.error(error);
+        console.error(error)
     }
 
 })
 
 // <<<<<<<<< End Discord Calls <<<<<<<<<
 
-client.login(token);
+client.login(token)
 
 
 
