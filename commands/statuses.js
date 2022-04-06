@@ -8,6 +8,13 @@ module.exports = {
     name: "statuses",
     description: "Gets the statuses of the specified services",
     image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/Direct%20statuses%20assistant-services%20picture.png",
+    /**
+     *
+     * @param {message} interaction The slash command used to call this command
+     * @param {json} args The arguments passed to the command
+     * @param {boolean} test Whether this is a test or not
+     * @param {Instance} instance The instance of the bot
+     */
     execute(interaction, args, test, instance) {
         interaction.deferReply({
             content: "Awaiting response from Devoups...",

@@ -17,7 +17,9 @@ let instance
 // <<<<<<<<< End const discord <<<<<<<<<
 
 // >>>>>>>> Begin Discord Calls >>>>>>>>
-
+/**
+ * Initialises the bot onconnect
+ */
 client.once('ready', async () => {
     console.log(`Bot ${client.user.tag} online !!\n\r`)
 
@@ -285,12 +287,17 @@ client.once('ready', async () => {
     //     require('./update').execute(guild)
     // })
     instance = new Instance(client)
-    await instance.updateStatuses()
+    instance.createTimoutSet(60 * 1)
+    instance.createTimoutStatuses(3)
+
 
 })
 
-
+/**
+ * @param {Discord.}
+ */
 client.on('interactionCreate', async (interaction) => {
+    console.log(typeof (interaction))
     if (!interaction.isCommand())
         return
     const { commandName, options } = interaction

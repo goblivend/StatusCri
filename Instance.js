@@ -7,14 +7,19 @@ const { Status } = require('./Status')
 
 class Instance {
 
-    constructor(client) {
+    constructor(client, setUpdateTime, statusUpdateTime) {
         this.statuses = {}
         this.client = client
-        this.updateSet()
+        this.setUpdateTime = setUpdateTime
+        this.statusUpdateTime = statusUpdateTime
+        this.createTimoutStatuses()
+        this.createTimoutSet()
     }
 
-
-    updateSet() {
+    /**
+     * Updates the set of services
+     */
+    async updateSet() {
         let newStatuses = {}
         for (const guild of this.client.guilds.cache.values()) {
             let category = guild.channels.cache.find(chan => chan.type === "GUILD_CATEGORY" && chan.name === "CriStatus")
@@ -33,10 +38,11 @@ class Instance {
             }
         }
         this.statuses = newStatuses
-        setTimeout(this.updateSet, 1000 * 60 * 30);
-
-
     }
+
+    /**
+     * Returns the status of the service
+     */
     async updateStatuses() {
         for (let serv in this.statuses) {
             let [mystatus, service] = await new Status(serv, this.statuses[serv].group).get()
@@ -54,6 +60,12 @@ class Instance {
         setTimeout(this.updateStatuses, 1000 * 60 * 2);
     }
 
+    /**
+     * Removes a service channel from the instance
+     * @param {sring} service - service name
+     * @param {string} chanId - channel id
+     * @param {string} guildId - guild id
+     */
     removeService(service, chanId, guildId) {
         console.log(`Removing service ${service}`)
 
@@ -67,6 +79,12 @@ class Instance {
         }
     }
 
+    /**
+     * Adds a service to the instance
+     * @param {string} service - service name
+     * @param {string} chanId - channel id
+     * @param {string} guildId - guild id
+     */
     async addService(service, chanId, guildId) {
         // console.log(`Adding service ${service}`)
         if (!this.statuses[service]) {
@@ -82,14 +100,41 @@ class Instance {
 
     }
 
+    /**
+     * Gets the group associated with the service in the DEOVUPS database
+     * @param {string} service - service name
+     * @return {string} group - group name
+     */
+
     getGroupFromService(service) {
         for (let group in DEVOUPS_GROUPS)
             if (DEVOUPS_GROUPS[group].includes(service))
                 return group
     }
 
+    /**
+     * Returns the name of the channel based on the service and status
+     * @param {string} service - service name
+     * @param {boolean} status - status of the service
+     */
     getChannelName(service, status) {
         return `${status ? "✅" : "❌"}_${DEVOUPS_SERVICES_CODE_SHORTEN[DEVOUPS_SERVICES_CODE.indexOf(service)]}`
+    }
+
+
+    /**
+     * Calls updateStatuses every `this.statusUpdateTime` minutes
+     */
+    async createTimoutStatuses() {
+        await this.updateStatuses()
+        setTimeout(this.createTimoutStatuses, this.statusUpdateTime * 1000 * 60);
+    }
+    /**
+     * Calls updateSet every `this.setUpdateTime` minutes
+     */
+    async createTimoutSet() {
+        await this.updateSet()
+        setTimeout(this.createTimoutSet, this.setUpdateTime * 1000 * 60);
     }
 }
 

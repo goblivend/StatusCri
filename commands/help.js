@@ -5,6 +5,13 @@ const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('
 module.exports = {
     name: "help",
     description: "Shows this help message",
+    /**
+     * 
+     * @param {message} interaction The slash command used to call this command
+     * @param {json} args The arguments passed to the command
+     * @param {boolean} test Whether this is a test or not
+     * @param {Instance} instance The instance of the bot
+     */
     execute(interaction, args, test, instance) {
         let embeds = []
         commandFiles.sort((a, b) => a.name < b.name)

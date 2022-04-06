@@ -7,6 +7,10 @@ class Status {
         this.group = group
     }
 
+    /**
+     * Fetch the status of the service in the DEVOUPS API
+     * @returns {[boolean, string]} [status, service] - status of the service and the service name
+     */
     async get() {
         console.log(`Getting status for ${this.service}`)
         let result = await fetch(`${DEVOUPS_URL}/${this.group}_${this.service}/statuses`)

@@ -6,6 +6,13 @@ module.exports = {
     name: "add",
     description: "Adds a service channel in the `CRISTATUS` category to update\nAnd creates it if the category doesn't exist at the moment",
     image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/Main%20feature.png",
+    /**
+     * 
+     * @param {message} interaction The slash command used to call this command
+     * @param {json} args The arguments passed to the command
+     * @param {boolean} test Whether this is a test or not
+     * @param {Instance} instance The instance of the bot
+     */
     async execute(interaction, args, test, instance) {
         await interaction.deferReply({
             content: "Awaiting response from Devoups...",

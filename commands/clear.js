@@ -4,6 +4,13 @@ module.exports = {
     name: "clear",
     description: "Clears the list of services in the CriStatus category",
     image: "https://raw.githubusercontent.com/goblivend/StatusCri/main/README%20Content/clear.png",
+    /**
+     * 
+     * @param {message} interaction The slash command used to call this command
+     * @param {json} args The arguments passed to the command
+     * @param {boolean} test Whether this is a test or not
+     * @param {Instance} instance The instance of the bot
+     */
     async execute(interaction, args, test, instance) {
         await interaction.deferReply({
             content: "Awaiting response from Discord...",
