@@ -2,18 +2,22 @@
 
 const { DEVOUPS_SERVICES_CODE_SHORTEN, DEVOUPS_SERVICES_CODE, DEVOUPS_GROUPS } = require('./DEVOUPS')
 const { Status } = require('./Status')
+const { client } = require('./index')
 
 // <<<<<<<<< End imports <<<<<<<<<
 
 class Instance {
 
-    constructor(client, setUpdateTime, statusUpdateTime) {
+    constructor(setUpdateTime, statusUpdateTime) {
         this.statuses = {}
-        this.client = client
         this.setUpdateTime = setUpdateTime
         this.statusUpdateTime = statusUpdateTime
-        // this.createTimoutStatuses()
-        // this.createTimoutSet()
+
+        // Update the set of services every setUpdateTime seconds
+        setInterval(this.updateSet, this.statusUpdateTime * 1000 * 20)
+
+        // Update the status of the services every setUpdateTime seconds
+        setInterval(this.updateStatuses, this.statusUpdateTime * 1000 * 20)
     }
 
 
@@ -21,18 +25,24 @@ class Instance {
      * Updates the statuses of the services
      */
     async updateStatuses() {
+        console.log("Statuses update")
+
+        // Checking for each services saved if the status has changed
         for (let serv in this.statuses) {
+            // Getting the new status
             let [mystatus, service] = await new Status(serv, this.statuses[serv].group).get()
-            this.statuses[service].status = mystatus
-            let chanName = this.getChannelName(service, mystatus)
-            for (const chan of this.statuses[service].channels) {
-                let channel = this.client.guilds.cache.get(chan.guild).channels.cache.get(chan.id)
-                if (channel) {
-                    channel.setName(chanName)
-                    console.log(chanName)
+            // Updating the status if it has changed
+            if (mystatus != this.statuses[serv].status) {
+                this.statuses[service].status = mystatus
+                // Getting the name of the channel to update
+                let chanName = Instance.getChannelName(service, mystatus)
+                // Cycling through each server to update the names of the channels
+                for (const chan of this.statuses[service].channels) {
+                    let channel = client.guilds.cache.get(chan.guild).channels.cache.get(chan.id)
+                    if (channel)
+                        channel.setName(chanName)
                 }
             }
-
         }
     }
 
@@ -40,13 +50,20 @@ class Instance {
      * Updates the set of services
      */
     async updateSet() {
+        console.log("Set update")
+
         let newStatuses = {}
-        for (const guild of this.client.guilds.cache.values()) {
+        // Cycling through each server to get the different services to keep track of
+        for (const guild of client.guilds.cache.values()) {
             let category = guild.channels.cache.find(chan => chan.type === "GUILD_CATEGORY" && chan.name === "CriStatus")
+            // If a category is found, cycling through the channels to get the services
             if (category) {
                 for (const chan of category.children) {
+                    if (!(chan[1].name.startsWith("❓_") || chan[1].name.startsWith("❌_") || chan[1].name.startsWith("✅_"))) {
+                        console.log(`The channel ${chan[1].name} present in the server ${chan[1].guild.name} is not a service`)
+                    }
                     let service = DEVOUPS_SERVICES_CODE[DEVOUPS_SERVICES_CODE_SHORTEN.indexOf(chan[1].name.split("_")[1])]
-                    let group = this.getGroupFromService(service)
+                    let group = Instance.getGroupFromService(service)
                     if (!newStatuses[service]) {
                         newStatuses[service] = {
                             status: false,
@@ -67,9 +84,9 @@ class Instance {
      * @param {string} guildId - guild id
      */
     removeService(service, chanId, guildId) {
-        console.log(`Removing service ${service}`)
-
+        // Removing the service of the guild if it exists
         if (this.statuses[service]) {
+            // Cycling through the channels to remove the channel
             for (let chan of this.statuses[service].channels) {
                 if (chan.id === chanId && chan.guild === guildId)
                     this.statuses[service].channels.splice(this.statuses[service].channels.indexOf(chan), 1)
@@ -86,17 +103,16 @@ class Instance {
      * @param {string} guildId - guild id
      */
     async addService(service, chanId, guildId) {
-        // console.log(`Adding service ${service}`)
+        // Checking if the service is already in the instance and if not, adding it and getting the status to initialize it
         if (!this.statuses[service]) {
-            let status = (await new Status(service, this.getGroupFromService(service)).get())[0]
+            let status = (await new Status(service, Instance.getGroupFromService(service)).get())[0]
             this.statuses[service] = {
                 status: status,
-                group: this.getGroupFromService(service),
+                group: Instance.getGroupFromService(service),
                 channels: []
             }
         }
         this.statuses[service].channels.push({ id: chanId, guild: guildId })
-        // console.log(`Added service ${service}`)
 
     }
 
@@ -105,7 +121,8 @@ class Instance {
      * @param {string} service - service name
      * @return {string} group - group name
      */
-    getGroupFromService(service) {
+    static getGroupFromService(service) {
+        // Getting the group of the service
         for (let group in DEVOUPS_GROUPS)
             if (DEVOUPS_GROUPS[group].includes(service))
                 return group
@@ -116,24 +133,8 @@ class Instance {
      * @param {string} service - service name
      * @param {boolean} status - status of the service
      */
-    getChannelName(service, status) {
+    static getChannelName(service, status) {
         return `${status ? "✅" : "❌"}_${DEVOUPS_SERVICES_CODE_SHORTEN[DEVOUPS_SERVICES_CODE.indexOf(service)]}`
-    }
-
-
-    /**
-     * Calls updateStatuses every `this.statusUpdateTime` minutes
-     */
-    async createTimoutStatuses() {
-        await this.updateStatuses();
-        setTimeout(this.createTimoutStatuses, this.statusUpdateTime * 1000 * 60);
-    }
-    /**
-     * Calls updateSet every `this.setUpdateTime` minutes
-     */
-    async createTimoutSet() {
-        await this.updateSet();
-        setTimeout(this.createTimoutSet, this.setUpdateTime * 1000 * 60);
     }
 }
 

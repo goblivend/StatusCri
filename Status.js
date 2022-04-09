@@ -12,7 +12,6 @@ class Status {
      * @returns {[boolean, string]} [status, service] - status of the service and the service name
      */
     async get() {
-        console.log(`Getting status for ${this.service}`)
         let result = await fetch(`${DEVOUPS_URL}/${this.group}_${this.service}/statuses`)
         let data = await result.json()
         let status = data.results[data.results.length - 1].success

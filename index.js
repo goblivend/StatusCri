@@ -2,14 +2,16 @@
 // >>>>>>>> Begin const discord >>>>>>>>
 
 const Discord = require('discord.js')
-const keepAlive = require('./server')
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
-require('dotenv').config();
 const { SlashCommandBuilder } = require('@discordjs/builders')
+require('dotenv').config();
 
+const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
+module.exports = { client }
 
-const token = process.env.TOKEN
 const { Instance } = require('./Instance')
+
+const { keepAlive } = require('./server')
+const token = process.env.TOKEN
 
 let test = true
 let instance
@@ -28,14 +30,17 @@ client.once('ready', async () => {
     const guild = client.guilds.cache.get(guildId)
     let commands
 
-    if (guild) {
+    // Checking if we are in a test situation with guilId present
+    // (no need to push all the commands definitively in the test environment)
+    /*if (guild) {
         console.log("Guild found")
         commands = guild.commands
         test = true
-    } else {
-        commands = client.application?.commands
-    }
+    } else {*/
+    commands = client.application?.commands
+    /*}*/
 
+    // Creating the different commands
     commands?.create(new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with pong')
@@ -282,27 +287,28 @@ client.once('ready', async () => {
 
     console.log(`commands loaded\n`)
 
-    instance = new Instance(client, 60 * 1, 3)
-    instance.createTimoutSet()
-    instance.createTimoutStatuses()
-
-
+    // Creating an instance for the back side of the bot
+    // It will handle the storage of the statuses
+    instance = new Instance(1, 1)
 })
 
 /**
+ * This function is called when the bot receives a message
  * @param {Discord.Interaction<Discord.CacheType>} interaction
  */
 client.on('interactionCreate', async (interaction) => {
-    console.log(typeof (interaction))
+    // We only care about commands
     if (!interaction.isCommand())
         return
+    // Extracting the command information
     const { commandName, options } = interaction
 
     console.log(`${interaction.guild.name} : Command ${commandName}`)
 
-
+    // Getting the command file to execute it
     const command = require(`./commands/${commandName}.js`)
 
+    // Executing the command
     try {
         await command.execute(interaction, options, test, instance)
     } catch (error) {
@@ -313,7 +319,10 @@ client.on('interactionCreate', async (interaction) => {
 
 // <<<<<<<<< End Discord Calls <<<<<<<<<
 
+// Ask a website to ping the bot every 5 minutes to keep it alive
 keepAlive()
+
+// Loging in the bot
 client.login(token)
 
 

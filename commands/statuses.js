@@ -1,7 +1,6 @@
-const fetch = require("node-fetch")
 const { MessageActionRow, MessageButton } = require('discord.js')
 const { DEVOUPS_GROUPS, DEVOUPS_GROUPS_CODE, DEVOUPS_SERVICES_NAME, DEVOUPS_SERVICES_CODE, DEVOUPS_URL } = require('../DEVOUPS')
-
+const { Status } = require('../Status')
 
 
 module.exports = {
@@ -16,12 +15,13 @@ module.exports = {
      * @param {Instance} instance The instance of the bot
      */
     execute(interaction, args, test, instance) {
+        // Creating a deferReply in the meantime to avoid the message to be deleted
         interaction.deferReply({
             content: "Awaiting response from Devoups...",
             ephemeral: true, // Only the author will see this message
         })
 
-
+        // Getting the services asked by the user
         let services = []
         for (group of DEVOUPS_GROUPS_CODE) {
             let val = args.getString(group)
@@ -29,35 +29,30 @@ module.exports = {
                 continue
 
             if (val === 'all') {
-                // console.log(group)
                 for (service of DEVOUPS_GROUPS[group]) {
-                    // console.log('\t' + service)
                     services.push([group, service])
                 }
             } else {
-                // console.log(group + '_' + val)
                 services.push([group, val])
             }
         }
-
-
-        // console.log(services)
+        // Getting the promises to inform the status of the services
         let promises = []
         for (tuple of services) {
             let group = tuple[0]
             let service = tuple[1]
-            // getStatus(DEVOUPS_URL, group, service)
-            promises.push(new Promise(async () => {
-                return instance.statuses[service] ? instance.statuses[service].status : await new Status(group, service).get()
-            }))
+            promises.push(
+                instance.statuses[service] ?
+                    new Promise(async () => { return instance.statuses[service].status }) :
+                    new Status(service, group).get()
+            )
         }
+        // Waiting for the promises to be resolved and then sending the message
         Promise.all(promises).then(values => {
             let mycontent = ""
             let rows = []
             for (i = 0; i < values.length; i++) {
                 let [mystatus, service] = values[i]
-
-                console.log(service + ': ' + (mystatus ? '✅' : '❌'))
                 if (i < 25) {
                     if (i % 5 == 0) {
                         rows.push(new MessageActionRow())
@@ -66,7 +61,6 @@ module.exports = {
                         .setCustomId(service)
                         .setLabel(DEVOUPS_SERVICES_NAME[DEVOUPS_SERVICES_CODE.indexOf(service)])
                         .setStyle(mystatus ? 'SUCCESS' : 'DANGER')
-                    // .setDisabled(true)
                     if (!mystatus)
                         button.setEmoji('717700063429656587')
                     rows[rows.length - 1].addComponents(button)
@@ -88,7 +82,6 @@ module.exports = {
                     )
                 }
                 mycontent += '❌ test\n'
-                //console.log("\n\nMy additionnal content is :" + mycontent + '\n\n')
             }
             interaction.editReply({
                 content: services.length <= 25 ? "Here are the statuses of the specified services " :
