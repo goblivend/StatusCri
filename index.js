@@ -2,7 +2,7 @@
 // >>>>>>>> Begin const discord >>>>>>>>
 
 const Discord = require('discord.js')
-
+const keepAlive = require('./server')
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
 require('dotenv').config();
 const { SlashCommandBuilder } = require('@discordjs/builders')
@@ -313,6 +313,7 @@ client.on('interactionCreate', async (interaction) => {
 
 // <<<<<<<<< End Discord Calls <<<<<<<<<
 
+keepAlive()
 client.login(token)
 
 
