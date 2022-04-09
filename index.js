@@ -289,7 +289,7 @@ client.once('ready', async () => {
 
     // Creating an instance for the back side of the bot
     // It will handle the storage of the statuses
-    instance = new Instance(1, 1)
+    instance = new Instance(60 * 3, 5)
 })
 
 /**
