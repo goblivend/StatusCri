@@ -36,7 +36,6 @@ client.once('ready', async () => {
         commands = client.application?.commands
     }
 
-    // commands?.create({ name: 'ping', description: 'Replies with pong' })
     commands?.create(new SlashCommandBuilder()
         .setName('ping')
         .setDescription('Replies with pong')
@@ -283,9 +282,6 @@ client.once('ready', async () => {
 
     console.log(`commands loaded\n`)
 
-    // client.guilds.cache.each(guild => {
-    //     require('./update').execute(guild)
-    // })
     instance = new Instance(client, 60 * 1, 3)
     instance.createTimoutSet()
     instance.createTimoutStatuses()
@@ -294,7 +290,7 @@ client.once('ready', async () => {
 })
 
 /**
- * @param {Discord.}
+ * @param {Discord.Interaction<Discord.CacheType>} interaction
  */
 client.on('interactionCreate', async (interaction) => {
     console.log(typeof (interaction))
