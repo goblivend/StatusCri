@@ -4,11 +4,11 @@
 const Discord = require('discord.js')
 
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
-
+require('dotenv').config();
 const { SlashCommandBuilder } = require('@discordjs/builders')
 
 
-const { token } = require('../token.json')
+const token = process.env.TOKEN
 const { Instance } = require('./Instance')
 
 let test = true
@@ -286,9 +286,9 @@ client.once('ready', async () => {
     // client.guilds.cache.each(guild => {
     //     require('./update').execute(guild)
     // })
-    instance = new Instance(client)
-    instance.createTimoutSet(60 * 1)
-    instance.createTimoutStatuses(3)
+    instance = new Instance(client, 60 * 1, 3)
+    instance.createTimoutSet()
+    instance.createTimoutStatuses()
 
 
 })

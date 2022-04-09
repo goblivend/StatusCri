@@ -12,8 +12,28 @@ class Instance {
         this.client = client
         this.setUpdateTime = setUpdateTime
         this.statusUpdateTime = statusUpdateTime
-        this.createTimoutStatuses()
-        this.createTimoutSet()
+        // this.createTimoutStatuses()
+        // this.createTimoutSet()
+    }
+
+
+    /**
+     * Updates the statuses of the services
+     */
+    async updateStatuses() {
+        for (let serv in this.statuses) {
+            let [mystatus, service] = await new Status(serv, this.statuses[serv].group).get()
+            this.statuses[service].status = mystatus
+            let chanName = this.getChannelName(service, mystatus)
+            for (const chan of this.statuses[service].channels) {
+                let channel = this.client.guilds.cache.get(chan.guild).channels.cache.get(chan.id)
+                if (channel) {
+                    channel.setName(chanName)
+                    console.log(chanName)
+                }
+            }
+
+        }
     }
 
     /**
@@ -38,26 +58,6 @@ class Instance {
             }
         }
         this.statuses = newStatuses
-    }
-
-    /**
-     * Returns the status of the service
-     */
-    async updateStatuses() {
-        for (let serv in this.statuses) {
-            let [mystatus, service] = await new Status(serv, this.statuses[serv].group).get()
-            this.statuses[service].status = mystatus
-            let chanName = this.getChannelName(service, mystatus)
-            for (const chan of this.statuses[service].channels) {
-                let channel = this.client.guilds.cache.get(chan.guild).channels.cache.get(chan.id)
-                if (channel) {
-                    channel.setName(chanName)
-                    console.log(chanName)
-                }
-            }
-
-        }
-        setTimeout(this.updateStatuses, 1000 * 60 * 2);
     }
 
     /**
@@ -105,7 +105,6 @@ class Instance {
      * @param {string} service - service name
      * @return {string} group - group name
      */
-
     getGroupFromService(service) {
         for (let group in DEVOUPS_GROUPS)
             if (DEVOUPS_GROUPS[group].includes(service))
@@ -126,14 +125,14 @@ class Instance {
      * Calls updateStatuses every `this.statusUpdateTime` minutes
      */
     async createTimoutStatuses() {
-        await this.updateStatuses()
+        await this.updateStatuses();
         setTimeout(this.createTimoutStatuses, this.statusUpdateTime * 1000 * 60);
     }
     /**
      * Calls updateSet every `this.setUpdateTime` minutes
      */
     async createTimoutSet() {
-        await this.updateSet()
+        await this.updateSet();
         setTimeout(this.createTimoutSet, this.setUpdateTime * 1000 * 60);
     }
 }
