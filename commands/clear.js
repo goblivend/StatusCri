@@ -36,7 +36,7 @@ module.exports = {
                 channel[1].delete()
             } else {
                 // Otherwise informing through the logs that the channel is not a service channel
-                console.log(channel[1].parent + " " + channel[1].name)
+                print(channel[1].parent + " " + channel[1].name)
                 content += `${channel[1].parent} ${channel[1].name} is not a service channel, send a message to @goblivend#0133 if you didn't create this channel yourself\n`
             }
         }

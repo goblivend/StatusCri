@@ -4,6 +4,7 @@
 const Discord = require('discord.js')
 const { SlashCommandBuilder } = require('@discordjs/builders')
 require('dotenv').config();
+const { print } = require('./generalFunctions')
 
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
 module.exports = { client }
@@ -23,7 +24,7 @@ let instance
  * Initialises the bot onconnect
  */
 client.once('ready', async () => {
-    console.log(`Bot ${client.user.tag} online !!\n\r`)
+    print(`Bot ${client.user.tag} online !!\n\r`)
 
 
     const guildId = '691031398768705697'
@@ -33,7 +34,7 @@ client.once('ready', async () => {
     // Checking if we are in a test situation with guilId present
     // (no need to push all the commands definitively in the test environment)
     /*if (guild) {
-        console.log("Guild found")
+        print("Guild found")
         commands = guild.commands
         test = true
     } else {*/
@@ -285,7 +286,7 @@ client.once('ready', async () => {
         .setDescription('Clears the list of services in the CriStatus category')
     )
 
-    console.log(`commands loaded\n`)
+    print(`commands loaded\n`)
 
     // Creating an instance for the back side of the bot
     // It will handle the storage of the statuses
@@ -303,7 +304,7 @@ client.on('interactionCreate', async (interaction) => {
     // Extracting the command information
     const { commandName, options } = interaction
 
-    console.log(`${interaction.guild.name} : Command ${commandName}`)
+    print(`${interaction.guild.name} : Command ${commandName}`)
 
     // Getting the command file to execute it
     const command = require(`./commands/${commandName}.js`)
