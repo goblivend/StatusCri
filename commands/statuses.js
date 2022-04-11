@@ -14,9 +14,9 @@ module.exports = {
      * @param {boolean} test Whether this is a test or not
      * @param {Instance} instance The instance of the bot
      */
-    execute(interaction, args, test, instance) {
+    async execute(interaction, args, test, instance) {
         // Creating a deferReply in the meantime to avoid the message to be deleted
-        interaction.deferReply({
+        await interaction.deferReply({
             content: "Awaiting response from Devoups...",
             ephemeral: true, // Only the author will see this message
         })
@@ -36,21 +36,24 @@ module.exports = {
                 services.push([group, val])
             }
         }
+
         // Getting the promises to inform the status of the services
         let promises = []
         for (tuple of services) {
             let group = tuple[0]
             let service = tuple[1]
+
             promises.push(
                 instance.statuses[service] ?
-                    new Promise(async () => { return instance.statuses[service].status }) :
+                    new Promise((res, err) => { res([instance.statuses[service].status, service]) }) :
                     new Status(service, group).get()
             )
         }
-        // Waiting for the promises to be resolved and then sending the message
-        Promise.all(promises).then(values => {
-            let mycontent = ""
-            let rows = []
+
+        // Waiting for the promises to be resolved to complete the content of the reply
+        let mycontent = ""
+        let rows = []
+        await Promise.all(promises).then(async values => {
             for (i = 0; i < values.length; i++) {
                 let [mystatus, service] = values[i]
                 if (i < 25) {
@@ -68,28 +71,30 @@ module.exports = {
                     mycontent += `${mystatus ? '✅' : '❌'} ${DEVOUPS_SERVICES_NAME[DEVOUPS_SERVICES_CODE.indexOf(service)]}\n`
                 }
             }
-            if (test) {
-                if (values.length < 25) {
-                    if (values.length % 5 == 0) {
-                        rows.push(new MessageActionRow())
-                    }
-                    rows[rows.length - 1].addComponents(new MessageButton()
-                        .setCustomId('test')
-                        .setLabel('test')
-                        .setStyle('DANGER')
-                        .setDisabled(true)
-                        .setEmoji('717700063429656587')
-                    )
-                }
-                mycontent += '❌ test\n'
-            }
-            interaction.editReply({
-                content: services.length <= 25 ? "Here are the statuses of the specified services " :
-                    `Here are the statuses of the first 25 specified services:\n${mycontent}`,
-
-                components: rows
-            })
         })
 
+        // Adding test content if this is a test
+        if (test) {
+            if (values.length < 25) {
+                if (values.length % 5 == 0) {
+                    rows.push(new MessageActionRow())
+                }
+                rows[rows.length - 1].addComponents(new MessageButton()
+                    .setCustomId('test')
+                    .setLabel('test')
+                    .setStyle('DANGER')
+                    .setDisabled(true)
+                    .setEmoji('717700063429656587')
+                )
+            }
+            mycontent += '❌ test\n'
+        }
+
+        // Sending the reply
+        interaction.editReply({
+            content: services.length <= 25 ? "Here are the statuses of the specified services " :
+                `Here are the statuses of the first 25 specified services:\n${mycontent}`,
+            components: rows
+        })
     }
 }

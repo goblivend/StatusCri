@@ -14,7 +14,7 @@ const { Instance } = require('./Instance')
 const { keepAlive } = require('./server')
 const token = process.env.TOKEN
 
-let test = true
+let test = false
 let instance
 
 // <<<<<<<<< End const discord <<<<<<<<<
