@@ -16,7 +16,7 @@ class Instance {
 
         // Update the set of services every setUpdateTime seconds
         this.updateSet()
-        setInterval(this.updateSet, this.statusUpdateTime * 1000 * 60)
+        setInterval(this.updateSet, this.setUpdateTime * 1000 * 60)
 
         // Update the status of the services every setUpdateTime seconds
         this.updateStatuses()
