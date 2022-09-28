@@ -1,4 +1,4 @@
-const DEVOUPS_URL = "https://devoups.online/api/v1/services"
+const DEVOUPS_URL = "https://devoups.online/api/v1/endpoints"
 const DEVOUPS_GROUPS = {
     "assistants-services": [
         "git-assistants",
