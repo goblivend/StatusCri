@@ -29,274 +29,277 @@ client
     //.on("debug", console.log)
     //.on("warn", console.log)
     .once('ready', async () => {
-    log(`Bot ${client.user.tag} online !!\n\r`)
+        log(`Bot ${client.user.tag} online !!\n\r`)
 
 
-    const guildId = '691031398768705697'
-    const guild = client.guilds.cache.get(guildId)
-    let commands
+        const guildId = '691031398768705697'
+        const guild = client.guilds.cache.get(guildId)
+        let commands
 
-    // Checking if we are in a test situation with guilId present
-    // (no need to push all the commands definitively in the test environment)
-    /*if (guild) {
-        log("Guild found")
-        commands = guild.commands
-        test = true
-    } else {*/
-    commands = client.application?.commands
-    /*}*/
+        // Checking if we are in a test situation with guilId present
+        // (no need to push all the commands definitively in the test environment)
+        /*if (guild) {
+            log("Guild found")
+            commands = guild.commands
+            test = true
+        } else {*/
+        commands = client.application?.commands
+        /*}*/
 
-    // Creating the different commands
-    commands?.create(new SlashCommandBuilder()
-        .setName('ping')
-        .setDescription('Replies with pong')
-    )
-    commands?.create(new SlashCommandBuilder()
-        .setName('help')
-        .setDescription('Shows the help')
-    )
-    commands?.create(new SlashCommandBuilder()
-        .setName('statuses')
-        .setDescription('Gets the statuses of the services')
-        .addStringOption(option => option
-            .setName('authentication')
-            .setDescription('Services from the Authentication group')
-            .setRequired(false)
-            .addChoices( 
-                { name: 'All', value:'all'},
-                { name: 'Kerberos-KDC-Ticket-Server', value: 'kerberos-kdc-ticket-server'},
-                { name: 'LDAP', value: 'ldap'},
-                { name: 'LDAPS', value: 'ldaps'}
+        // Creating the different commands
+        commands?.create(new SlashCommandBuilder()
+            .setName('ping')
+            .setDescription('Replies with pong')
+        )
+        commands?.create(new SlashCommandBuilder()
+            .setName('help')
+            .setDescription('Shows the help')
+        )
+        commands?.create(new SlashCommandBuilder()
+            .setName('statuses')
+            .setDescription('Gets the statuses of the services')
+            .addStringOption(option => option
+                .setName('authentication')
+                .setDescription('Services from the Authentication group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Kerberos-KDC-Ticket-Server', value: 'kerberos-kdc-ticket-server' },
+                    { name: 'LDAP', value: 'ldap' },
+                    { name: 'LDAPS', value: 'ldaps' }
+                )
+            ).addStringOption(option => option
+                .setName('critical')
+                .setDescription('Services from the Critical group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Console-Bocal', value: 'console-bocal' },
+                    { name: 'DNS', value: 'dns' },
+                    { name: 'Gitlab', value: 'gitlab' },
+                    { name: 'Gitlab-Registry', value: 'gitlab-registry' },
+                    { name: 'Intranet-Cri', value: 'intranet-cri' },
+                    { name: 'LDAP-Cri', value: 'ldap-cri' },
+                    { name: 'S3', value: 's3' },
+                    { name: 'Vault', value: 'vault' })
+            ).addStringOption(option => option
+                .setName('internal-services')
+                .setDescription('Services from the Internal Services group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Bookstack', value: 'bookstack' },
+                    { name: 'K8s-ArgoCD', value: 'k8s-argocd' },
+                    { name: 'K8s-ops-Grafana', value: 'k8s-ops-grafana' },
+                    { name: 'K8s-ops-Prometheus', value: 'k8s-ops-prometheus' },
+                    { name: 'K8s-Prod-1-Prometheus', value: 'k8s-prod-1-prometheus' },
+                    { name: 'Mail', value: 'mail' })
+            ).addStringOption(option => option
+                .setName('others')
+                .setDescription('Services from the Others group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Blog', value: 'blog' },
+                    { name: 'Documentation', value: 'documentation' },
+                    { name: 'HTTPS-Redirection', value: 'https-redirection' },
+                    { name: 'MaaS', value: 'maas' },
+                    { name: 'OIDC-Redirection', value: 'oidc-redirection' })
+            ).addStringOption(option => option
+                .setName('pie-sm')
+                .setDescription('Services from the PIE-SM group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Bttrack', value: 'bttrack' },
+                    { name: 'Django-PXE', value: 'django-pxe' },
+                    { name: 'Fleet-Manager', value: 'fleet-manager' },
+                    { name: 'iPXE', value: 'ipxe' })
+            ).addStringOption(option => option
+                .setName('student-services')
+                .setDescription('Services from the Student Services group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Git', value: 'git' },
+                    { name: 'Git Forge', value: 'git-forge' },
+                    { name: 'Moodle-(cours)', value: 'moodle-(cours)' },
+                    { name: 'Moodle-(exams)', value: 'moodle-(exams)' },
+                    { name: 'Moodle-(Recrutement)', value: 'moodle-(recrutement)' },
+                    { name: 'News', value: 'news' },
+                    { name: 'Rocket.Chat', value: 'rocket-chat' },
+                    { name: 'Wiki-Prog', value: 'wiki-prog' })
             )
-        ).addStringOption(option => option
-            .setName('critical')
-            .setDescription('Services from the Critical group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Console-Bocal', 'console-bocal')
-            .addChoice('DNS', 'dns')
-            .addChoice('Gitlab', 'gitlab')
-            .addChoice('Gitlab-Registry', 'gitlab-registry')
-            .addChoice('Intranet-Cri', 'intranet-cri')
-            .addChoice('LDAP-Cri', 'ldap-cri')
-            .addChoice('S3', 's3')
-            .addChoice('Vault', 'vault')
-        ).addStringOption(option => option
-            .setName('internal-services')
-            .setDescription('Services from the Internal Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Bookstack', 'bookstack')
-            .addChoice('K8s-ArgoCD', 'k8s-argocd')
-            .addChoice('K8s-ops-Grafana', 'k8s-ops-grafana')
-            .addChoice('K8s-ops-Prometheus', 'k8s-ops-prometheus')
-            .addChoice('K8s-Prod-1-Prometheus', 'k8s-prod-1-prometheus')
-            .addChoice('Mail', 'mail')
-        ).addStringOption(option => option
-            .setName('others')
-            .setDescription('Services from the Others group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Blog', 'blog')
-            .addChoice('Documentation', 'documentation')
-            .addChoice('HTTPS-Redirection', 'https-redirection')
-            .addChoice('MaaS', 'maas')
-            .addChoice('OIDC-Redirection', 'oidc-redirection')
-        ).addStringOption(option => option
-            .setName('pie-sm')
-            .setDescription('Services from the PIE-SM group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Bttrack', 'bttrack')
-            .addChoice('Django-PXE', 'django-pxe')
-            .addChoice('Fleet-Manager', 'fleet-manager')
-            .addChoice('iPXE', 'ipxe')
-        ).addStringOption(option => option
-            .setName('student-services')
-            .setDescription('Services from the Student Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Git', 'git')
-            .addChoice('Git Forge', 'git-forge')
-            .addChoice('Moodle-(cours)', 'moodle-(cours)')
-            .addChoice('Moodle-(exams)', 'moodle-(exams)')
-            .addChoice('Moodle-(Recrutement)', 'moodle-(recrutement)')
-            .addChoice('News', 'news')
-            .addChoice('Rocket.Chat', 'rocket-chat')
-            .addChoice('Wiki-Prog', 'wiki-prog')
         )
-    )
-    commands?.create(new SlashCommandBuilder()
-        .setName('add')
-        .setDescription('Adds services')
-        .addStringOption(option => option
-            .setName('assistants-services')
-            .setDescription('Services from the Assistants Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Git-Assistants', 'git-assistants')
-            .addChoice('Intranet-Assistants', 'intranet-assistants')
-            .addChoice('k8s-Assistants-Prod-1-argoCD', 'k8s-assistants-prod-1-argocd')
-            .addChoice('k8s-Assistants-Prod-1-Prometheus', 'k8s-assistants-prod-1-prometheus')
-        ).addStringOption(option => option
-            .setName('authentication')
-            .setDescription('Services from the Authentication group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Kerberos-KDC-Ticket-Server', 'kerberos-kdc-ticket-server')
-            .addChoice('LDAP', 'ldap')
-            .addChoice('LDAPS', 'ldaps')
-        ).addStringOption(option => option
-            .setName('critical')
-            .setDescription('Services from the Critical group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Console-Bocal', 'console-bocal')
-            .addChoice('DNS', 'dns')
-            .addChoice('Gitlab', 'gitlab')
-            .addChoice('Gitlab-Registry', 'gitlab-registry')
-            .addChoice('Intranet-Cri', 'intranet-cri')
-            .addChoice('LDAP-Cri', 'ldap-cri')
-            .addChoice('S3', 's3')
-            .addChoice('Vault', 'vault')
-        ).addStringOption(option => option
-            .setName('internal-services')
-            .setDescription('Services from the Internal Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Bookstack', 'bookstack')
-            .addChoice('K8s-ArgoCD', 'k8s-argocd')
-            .addChoice('K8s-ops-Grafana', 'k8s-ops-grafana')
-            .addChoice('K8s-ops-Prometheus', 'k8s-ops-prometheus')
-            .addChoice('K8s-Prod-1-Prometheus', 'k8s-prod-1-prometheus')
-            .addChoice('Mail', 'mail')
-        ).addStringOption(option => option
-            .setName('others')
-            .setDescription('Services from the Others group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Blog', 'blog')
-            .addChoice('Documentation', 'documentation')
-            .addChoice('HTTPS-Redirection', 'https-redirection')
-            .addChoice('MaaS', 'maas')
-            .addChoice('OIDC-Redirection', 'oidc-redirection')
-        ).addStringOption(option => option
-            .setName('pie-sm')
-            .setDescription('Services from the PIE-SM group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Bttrack', 'bttrack')
-            .addChoice('Django-PXE', 'django-pxe')
-            .addChoice('Fleet-Manager', 'fleet-manager')
-            .addChoice('iPXE', 'ipxe')
-        ).addStringOption(option => option
-            .setName('student-services')
-            .setDescription('Services from the Student Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Git', 'git')
-            .addChoice('Moodle-(cours)', 'moodle-(cours)')
-            .addChoice('Moodle-(exams)', 'moodle-(exams)')
-            .addChoice('Moodle-(Recrutement)', 'moodle-(recrutement)')
-            .addChoice('News', 'news')
-            .addChoice('Rocket.Chat', 'rocket-chat')
-            .addChoice('Wiki-Prog', 'wiki-prog')
+        commands?.create(new SlashCommandBuilder()
+            .setName('add')
+            .setDescription('Adds services')
+            .addStringOption(option => option
+                .setName('authentication')
+                .setDescription('Services from the Authentication group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Kerberos-KDC-Ticket-Server', value: 'kerberos-kdc-ticket-server' },
+                    { name: 'LDAP', value: 'ldap' },
+                    { name: 'LDAPS', value: 'ldaps' }
+                )
+            ).addStringOption(option => option
+                .setName('critical')
+                .setDescription('Services from the Critical group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Console-Bocal', value: 'console-bocal' },
+                    { name: 'DNS', value: 'dns' },
+                    { name: 'Gitlab', value: 'gitlab' },
+                    { name: 'Gitlab-Registry', value: 'gitlab-registry' },
+                    { name: 'Intranet-Cri', value: 'intranet-cri' },
+                    { name: 'LDAP-Cri', value: 'ldap-cri' },
+                    { name: 'S3', value: 's3' },
+                    { name: 'Vault', value: 'vault' })
+            ).addStringOption(option => option
+                .setName('internal-services')
+                .setDescription('Services from the Internal Services group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Bookstack', value: 'bookstack' },
+                    { name: 'K8s-ArgoCD', value: 'k8s-argocd' },
+                    { name: 'K8s-ops-Grafana', value: 'k8s-ops-grafana' },
+                    { name: 'K8s-ops-Prometheus', value: 'k8s-ops-prometheus' },
+                    { name: 'K8s-Prod-1-Prometheus', value: 'k8s-prod-1-prometheus' },
+                    { name: 'Mail', value: 'mail' })
+            ).addStringOption(option => option
+                .setName('others')
+                .setDescription('Services from the Others group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Blog', value: 'blog' },
+                    { name: 'Documentation', value: 'documentation' },
+                    { name: 'HTTPS-Redirection', value: 'https-redirection' },
+                    { name: 'MaaS', value: 'maas' },
+                    { name: 'OIDC-Redirection', value: 'oidc-redirection' })
+            ).addStringOption(option => option
+                .setName('pie-sm')
+                .setDescription('Services from the PIE-SM group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Bttrack', value: 'bttrack' },
+                    { name: 'Django-PXE', value: 'django-pxe' },
+                    { name: 'Fleet-Manager', value: 'fleet-manager' },
+                    { name: 'iPXE', value: 'ipxe' })
+            ).addStringOption(option => option
+                .setName('student-services')
+                .setDescription('Services from the Student Services group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Git', value: 'git' },
+                    { name: 'Git Forge', value: 'git-forge' },
+                    { name: 'Moodle-(cours)', value: 'moodle-(cours)' },
+                    { name: 'Moodle-(exams)', value: 'moodle-(exams)' },
+                    { name: 'Moodle-(Recrutement)', value: 'moodle-(recrutement)' },
+                    { name: 'News', value: 'news' },
+                    { name: 'Rocket.Chat', value: 'rocket-chat' },
+                    { name: 'Wiki-Prog', value: 'wiki-prog' })
+            )
         )
-    )
-    commands?.create(new SlashCommandBuilder()
-        .setName('remove')
-        .setDescription('removes services')
-        .addStringOption(option => option
-            .setName('assistants-services')
-            .setDescription('Services from the Assistants Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Git-Assistants', 'git-assistants')
-            .addChoice('Intranet-Assistants', 'intranet-assistants')
-            .addChoice('k8s-Assistants-Prod-1-argoCD', 'k8s-assistants-prod-1-argocd')
-            .addChoice('k8s-Assistants-Prod-1-Prometheus', 'k8s-assistants-prod-1-prometheus')
-        ).addStringOption(option => option
-            .setName('authentication')
-            .setDescription('Services from the Authentication group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Kerberos-KDC-Ticket-Server', 'kerberos-kdc-ticket-server')
-            .addChoice('LDAP', 'ldap')
-            .addChoice('LDAPS', 'ldaps')
-        ).addStringOption(option => option
-            .setName('critical')
-            .setDescription('Services from the Critical group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Console-Bocal', 'console-bocal')
-            .addChoice('DNS', 'dns')
-            .addChoice('Gitlab', 'gitlab')
-            .addChoice('Gitlab-Registry', 'gitlab-registry')
-            .addChoice('Intranet-Cri', 'intranet-cri')
-            .addChoice('LDAP-Cri', 'ldap-cri')
-            .addChoice('S3', 's3')
-            .addChoice('Vault', 'vault')
-        ).addStringOption(option => option
-            .setName('internal-services')
-            .setDescription('Services from the Internal Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Bookstack', 'bookstack')
-            .addChoice('K8s-ArgoCD', 'k8s-argocd')
-            .addChoice('K8s-ops-Grafana', 'k8s-ops-grafana')
-            .addChoice('K8s-ops-Prometheus', 'k8s-ops-prometheus')
-            .addChoice('K8s-Prod-1-Prometheus', 'k8s-prod-1-prometheus')
-            .addChoice('Mail', 'mail')
-        ).addStringOption(option => option
-            .setName('others')
-            .setDescription('Services from the Others group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Blog', 'blog')
-            .addChoice('Documentation', 'documentation')
-            .addChoice('HTTPS-Redirection', 'https-redirection')
-            .addChoice('MaaS', 'maas')
-            .addChoice('OIDC-Redirection', 'oidc-redirection')
-        ).addStringOption(option => option
-            .setName('pie-sm')
-            .setDescription('Services from the PIE-SM group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Bttrack', 'bttrack')
-            .addChoice('Django-PXE', 'django-pxe')
-            .addChoice('Fleet-Manager', 'fleet-manager')
-            .addChoice('iPXE', 'ipxe')
-        ).addStringOption(option => option
-            .setName('student-services')
-            .setDescription('Services from the Student Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Git', 'git')
-            .addChoice('Moodle-(cours)', 'moodle-(cours)')
-            .addChoice('Moodle-(exams)', 'moodle-(exams)')
-            .addChoice('Moodle-(Recrutement)', 'moodle-(recrutement)')
-            .addChoice('News', 'news')
-            .addChoice('Rocket.Chat', 'rocket-chat')
-            .addChoice('Wiki-Prog', 'wiki-prog')
+        commands?.create(new SlashCommandBuilder()
+            .setName('remove')
+            .setDescription('removes services')
+            .addStringOption(option => option
+                .setName('authentication')
+                .setDescription('Services from the Authentication group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Kerberos-KDC-Ticket-Server', value: 'kerberos-kdc-ticket-server' },
+                    { name: 'LDAP', value: 'ldap' },
+                    { name: 'LDAPS', value: 'ldaps' }
+                )
+            ).addStringOption(option => option
+                .setName('critical')
+                .setDescription('Services from the Critical group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Console-Bocal', value: 'console-bocal' },
+                    { name: 'DNS', value: 'dns' },
+                    { name: 'Gitlab', value: 'gitlab' },
+                    { name: 'Gitlab-Registry', value: 'gitlab-registry' },
+                    { name: 'Intranet-Cri', value: 'intranet-cri' },
+                    { name: 'LDAP-Cri', value: 'ldap-cri' },
+                    { name: 'S3', value: 's3' },
+                    { name: 'Vault', value: 'vault' })
+            ).addStringOption(option => option
+                .setName('internal-services')
+                .setDescription('Services from the Internal Services group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Bookstack', value: 'bookstack' },
+                    { name: 'K8s-ArgoCD', value: 'k8s-argocd' },
+                    { name: 'K8s-ops-Grafana', value: 'k8s-ops-grafana' },
+                    { name: 'K8s-ops-Prometheus', value: 'k8s-ops-prometheus' },
+                    { name: 'K8s-Prod-1-Prometheus', value: 'k8s-prod-1-prometheus' },
+                    { name: 'Mail', value: 'mail' })
+            ).addStringOption(option => option
+                .setName('others')
+                .setDescription('Services from the Others group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Blog', value: 'blog' },
+                    { name: 'Documentation', value: 'documentation' },
+                    { name: 'HTTPS-Redirection', value: 'https-redirection' },
+                    { name: 'MaaS', value: 'maas' },
+                    { name: 'OIDC-Redirection', value: 'oidc-redirection' })
+            ).addStringOption(option => option
+                .setName('pie-sm')
+                .setDescription('Services from the PIE-SM group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Bttrack', value: 'bttrack' },
+                    { name: 'Django-PXE', value: 'django-pxe' },
+                    { name: 'Fleet-Manager', value: 'fleet-manager' },
+                    { name: 'iPXE', value: 'ipxe' })
+            ).addStringOption(option => option
+                .setName('student-services')
+                .setDescription('Services from the Student Services group')
+                .setRequired(false)
+                .addChoices(
+                    { name: 'All', value: 'all' },
+                    { name: 'Git', value: 'git' },
+                    { name: 'Git Forge', value: 'git-forge' },
+                    { name: 'Moodle-(cours)', value: 'moodle-(cours)' },
+                    { name: 'Moodle-(exams)', value: 'moodle-(exams)' },
+                    { name: 'Moodle-(Recrutement)', value: 'moodle-(recrutement)' },
+                    { name: 'News', value: 'news' },
+                    { name: 'Rocket.Chat', value: 'rocket-chat' },
+                    { name: 'Wiki-Prog', value: 'wiki-prog' })
+            )
         )
-    )
-    commands?.create(new SlashCommandBuilder()
-        .setName('clear')
-        .setDescription('Clears the list of services in the CriStatus category')
-        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
-    )
+        commands?.create(new SlashCommandBuilder()
+            .setName('clear')
+            .setDescription('Clears the list of services in the CriStatus category')
+            .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
+        )
 
-    log(`commands loaded\n`)
+        log(`commands loaded\n`)
 
-    // Creating an instance for the back side of the bot
-    // It will handle the storage of the statuses
-    instance = new Instance(60 * 3, 5)
-})
+        // Creating an instance for the back side of the bot
+        // It will handle the storage of the statuses
+        instance = new Instance(60 * 3, 5)
+    })
 
 /**
- * This function is called when the bot receives a message
- * @param {Discord.Interaction<Discord.CacheType>} interaction
- */
+    * This function is called when the bot receives a message
+    * @param {Discord.Interaction<Discord.CacheType>} interaction
+    */
 client.on('interactionCreate', async (interaction) => {
     // We only care about commands
     if (!interaction.isCommand())
