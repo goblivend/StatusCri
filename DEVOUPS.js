@@ -1,11 +1,5 @@
-const DEVOUPS_URL = "https://devoups.online/api/v1/endpoints"
+const DEVOUPS_URL = "https://devou.ps/api/v1/endpoints"
 const DEVOUPS_GROUPS = {
-    "assistants-services": [
-        "git-assistants",
-        "intranet-assistants",
-        "k8s-assistants-prod-1-argocd",
-        "k8s-assistants-prod-1-prometheus"
-    ],
     "authentication": [
         "kerberos-kdc-ticket-server",
         "ldap",
@@ -44,6 +38,7 @@ const DEVOUPS_GROUPS = {
     ],
     "student-services": [
         "git",
+        "git-forge",
         "moodle-(cours)",
         "moodle-(exams)",
         "moodle-(recrutement)",
@@ -53,7 +48,6 @@ const DEVOUPS_GROUPS = {
     ]
 }
 const DEVOUPS_GROUPS_CODE = [
-    "assistants-services",
     "authentication",
     "critical",
     "internal-services",
@@ -62,10 +56,6 @@ const DEVOUPS_GROUPS_CODE = [
     "student-services"
 ]
 const DEVOUPS_SERVICES_CODE = [
-    "git-assistants",
-    "intranet-assistants",
-    "k8s-assistants-prod-1-argocd",
-    "k8s-assistants-prod-1-prometheus",
     "kerberos-kdc-ticket-server",
     "ldap",
     "ldaps",
@@ -93,6 +83,7 @@ const DEVOUPS_SERVICES_CODE = [
     "fleet-manager",
     "ipxe",
     "git",
+    "git-forge",
     "moodle-(cours)",
     "moodle-(exams)",
     "moodle-(recrutement)",
@@ -101,10 +92,6 @@ const DEVOUPS_SERVICES_CODE = [
     "wiki-prog"
 ]
 const DEVOUPS_SERVICES_NAME = [
-    "Git Assistants",
-    "Intranet Assistants",
-    "K8s Assistants Prod 1 ArgoCD",
-    "K8s Assistants Prod 1 Prometheus",
     "Kerberos KDC Ticket Server",
     "LDAP",
     "LDAPS",
@@ -132,6 +119,7 @@ const DEVOUPS_SERVICES_NAME = [
     "Fleet Manager",
     "iPXE",
     "Git",
+    "Git Forge",
     "Moodle (cours)",
     "Moodle (exams)",
     "Moodle (recrutement)",
@@ -140,10 +128,6 @@ const DEVOUPS_SERVICES_NAME = [
     "Wiki Prog"
 ]
 const DEVOUPS_SERVICES_CODE_SHORTEN = [
-    "git-assistants",
-    "intranet",
-    "k8s-ass-argocd-prod",
-    "k8s-ass-prometheus-prod",
     "ticket-server",
     "ldap",
     "ldaps",
@@ -171,6 +155,7 @@ const DEVOUPS_SERVICES_CODE_SHORTEN = [
     "fleet-manager",
     "ipxe",
     "git",
+    "git-forge",
     "moodle-cours",
     "moodle-exams",
     "moodle-recrutement",

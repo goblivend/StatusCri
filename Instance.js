@@ -3,7 +3,7 @@
 const { DEVOUPS_SERVICES_CODE_SHORTEN, DEVOUPS_SERVICES_CODE, DEVOUPS_GROUPS } = require('./DEVOUPS')
 const { Status } = require('./Status')
 const { client } = require('./index')
-const { print } = require('./generalFunctions')
+const { log } = require('./generalFunctions')
 
 // <<<<<<<<< End imports <<<<<<<<<
 
@@ -28,7 +28,7 @@ class Instance {
      * Updates the statuses of the services
      */
     async updateStatuses() {
-        print("Statuses update")
+        log("Statuses update")
 
         // Checking for each services saved if the status has changed
         for (let serv in this.statuses) {
@@ -53,7 +53,7 @@ class Instance {
      * Updates the set of services
      */
     async updateSet() {
-        print("Set update")
+        log("Set update")
 
         let newStatuses = {}
         // Cycling through each server to get the different services to keep track of
@@ -63,7 +63,7 @@ class Instance {
             if (category) {
                 for (const chan of category.children) {
                     if (!(chan[1].name.startsWith("❓_") || chan[1].name.startsWith("❌_") || chan[1].name.startsWith("✅_"))) {
-                        print(`The channel ${chan[1].name} present in the server ${chan[1].guild.name} is not a service`)
+                        log(`The channel ${chan[1].name} present in the server ${chan[1].guild.name} is not a service`)
                     }
                     let service = DEVOUPS_SERVICES_CODE[DEVOUPS_SERVICES_CODE_SHORTEN.indexOf(chan[1].name.split("_")[1])]
                     let group = Instance.getGroupFromService(service)

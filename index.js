@@ -2,9 +2,11 @@
 // >>>>>>>> Begin const discord >>>>>>>>
 
 const Discord = require('discord.js')
+const { PermissionFlagsBits } = require('discord.js');
+
 const { SlashCommandBuilder } = require('@discordjs/builders')
 require('dotenv').config();
-const { print } = require('./generalFunctions')
+const { log } = require('./generalFunctions')
 
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILD_MESSAGES, Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_INTEGRATIONS] })
 module.exports = { client }
@@ -23,8 +25,11 @@ let instance
 /**
  * Initialises the bot onconnect
  */
-client.once('ready', async () => {
-    print(`Bot ${client.user.tag} online !!\n\r`)
+client
+    //.on("debug", console.log)
+    //.on("warn", console.log)
+    .once('ready', async () => {
+    log(`Bot ${client.user.tag} online !!\n\r`)
 
 
     const guildId = '691031398768705697'
@@ -34,7 +39,7 @@ client.once('ready', async () => {
     // Checking if we are in a test situation with guilId present
     // (no need to push all the commands definitively in the test environment)
     /*if (guild) {
-        print("Guild found")
+        log("Guild found")
         commands = guild.commands
         test = true
     } else {*/
@@ -54,22 +59,15 @@ client.once('ready', async () => {
         .setName('statuses')
         .setDescription('Gets the statuses of the services')
         .addStringOption(option => option
-            .setName('assistants-services')
-            .setDescription('Services from the Assistants Services group')
-            .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Git-Assistants', 'git-assistants')
-            .addChoice('Intranet-Assistants', 'intranet-assistants')
-            .addChoice('k8s-Assistants-Prod-1-argoCD', 'k8s-assistants-prod-1-argocd')
-            .addChoice('k8s-Assistants-Prod-1-Prometheus', 'k8s-assistants-prod-1-prometheus')
-        ).addStringOption(option => option
             .setName('authentication')
             .setDescription('Services from the Authentication group')
             .setRequired(false)
-            .addChoice('All', 'all')
-            .addChoice('Kerberos-KDC-Ticket-Server', 'kerberos-kdc-ticket-server')
-            .addChoice('LDAP', 'ldap')
-            .addChoice('LDAPS', 'ldaps')
+            .addChoices( 
+                { name: 'All', value:'all'},
+                { name: 'Kerberos-KDC-Ticket-Server', value: 'kerberos-kdc-ticket-server'},
+                { name: 'LDAP', value: 'ldap'},
+                { name: 'LDAPS', value: 'ldaps'}
+            )
         ).addStringOption(option => option
             .setName('critical')
             .setDescription('Services from the Critical group')
@@ -119,6 +117,7 @@ client.once('ready', async () => {
             .setRequired(false)
             .addChoice('All', 'all')
             .addChoice('Git', 'git')
+            .addChoice('Git Forge', 'git-forge')
             .addChoice('Moodle-(cours)', 'moodle-(cours)')
             .addChoice('Moodle-(exams)', 'moodle-(exams)')
             .addChoice('Moodle-(Recrutement)', 'moodle-(recrutement)')
@@ -284,9 +283,10 @@ client.once('ready', async () => {
     commands?.create(new SlashCommandBuilder()
         .setName('clear')
         .setDescription('Clears the list of services in the CriStatus category')
+        .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     )
 
-    print(`commands loaded\n`)
+    log(`commands loaded\n`)
 
     // Creating an instance for the back side of the bot
     // It will handle the storage of the statuses
@@ -304,7 +304,7 @@ client.on('interactionCreate', async (interaction) => {
     // Extracting the command information
     const { commandName, options } = interaction
 
-    print(`${interaction.guild.name} : Command ${commandName}`)
+    log(`${interaction.guild.name} : Command ${commandName}`)
 
     // Getting the command file to execute it
     const command = require(`./commands/${commandName}.js`)
@@ -321,12 +321,12 @@ client.on('interactionCreate', async (interaction) => {
 // <<<<<<<<< End Discord Calls <<<<<<<<<
 
 // Ask a website to ping the bot every 5 minutes to keep it alive
-keepAlive()
+//keepAlive()
 
 // Loging in the bot
 client.login(token)
 
-
+console.log('Logged in')
 
 // all in : https://discord.com/api/oauth2/authorize?client_id=957708011164532766&permissions=1644971949559&scope=bot%20applications.commands
 
