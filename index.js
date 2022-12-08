@@ -286,7 +286,6 @@ client
         commands?.create(new SlashCommandBuilder()
             .setName('clear')
             .setDescription('Clears the list of services in the CriStatus category')
-            .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
         )
 
         log(`commands loaded\n`)
@@ -307,7 +306,7 @@ client.on('interactionCreate', async (interaction) => {
     // Extracting the command information
     const { commandName, options } = interaction
 
-    log(`${interaction.guild.name} : Command ${commandName}`)
+    log(`${interaction.guild.name} : Command ${commandName} by ${interaction.user.tag}`)
 
     // Getting the command file to execute it
     const command = require(`./commands/${commandName}.js`)
@@ -324,7 +323,7 @@ client.on('interactionCreate', async (interaction) => {
 // <<<<<<<<< End Discord Calls <<<<<<<<<
 
 // Ask a website to ping the bot every 5 minutes to keep it alive
-//keepAlive()
+keepAlive()
 
 // Loging in the bot
 client.login(token)
