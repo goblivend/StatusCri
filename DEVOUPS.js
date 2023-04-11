@@ -26,7 +26,6 @@ const DEVOUPS_GROUPS = {
     "others": [
         "blog",
         "documentation",
-        "https-redirection",
         "maas",
         "oidc-redirection"
     ],

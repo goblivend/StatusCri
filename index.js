@@ -27,7 +27,7 @@ let instance
  */
 client
     //.on("debug", console.log)
-    //.on("warn", console.log)
+    .on("warn", console.log)
     .once('ready', async () => {
         log(`Bot ${client.user.tag} online !!\n\r`)
 
